@@ -1,2 +1,2 @@
-# promptopia
-A Dynamic Prompt CRUD Application with AI ChatGPT.  
+# Promptopia
+A Dynamic Prompt (NextJS) CRUD Application with AI ChatGPT.  
