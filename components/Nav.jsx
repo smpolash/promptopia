@@ -47,8 +47,8 @@ const Nav = () => {
 
             <Link href='/profile'>
               <Image
-                // src={session?.user.image}
-                src='/assets/images/logo.svg'
+                src={session?.user.image}
+                // src='/assets/images/logo.svg'
                 width={37}
                 height={37}
                 className='rounded-full grayscale'
@@ -80,8 +80,8 @@ const Nav = () => {
         { session?.user ? (
           <div className='flex'>
             <Image
-                // src={session?.user.image}
-                src='/assets/images/logo.svg'
+                src={session?.user.image}
+                // src='/assets/images/logo.svg'
                 width={37}
                 height={37}
                 className='rounded-full grayscale'
