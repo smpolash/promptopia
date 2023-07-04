@@ -21,9 +21,14 @@ const Feed = () => {
 
   const [allPosts, setAllPosts] = useState([]);
   
+  const [searchText, setSearchText] = useState('');
+  const [searchTimeout, setSearchTimeout] = useState(null);
+  const [searchResult, setSearchResult] = useState([]);
+
   const fetchPosts = async () => {
     const response = await fetch("/api/prompt");
     const data = await response.json();
+
     setAllPosts(data);
   }
 
@@ -33,8 +38,8 @@ const Feed = () => {
 
   const filterPrompts = (searchtext) => {
     const regex = new RegExp(searchtext, "i"); // 'i' flag for case-insensitive search
-    return allPosts.filter(
-      (item) =>
+    
+    return allPosts.filter((item) =>
         regex.test(item.creator.username) ||
         regex.test(item.tag) ||
         regex.test(item.prompt)
@@ -49,7 +54,7 @@ const Feed = () => {
     setSearchTimeout(
       setTimeout(() => {
         const searchResult = filterPrompts(e.target.value);
-        setSearchedResults(searchResult);
+        setSearchResult(searchResult);
       }, 500)
     );
   };
@@ -58,12 +63,27 @@ const Feed = () => {
     setSearchText(tagName);
 
     const searchResult = filterPrompts(tagName);
-    setSearchedResults(searchResult);
+    setSearchResult(searchResult);
   };
   
   return (
     <section className='feed'>
-      <PromptCardList data={allPosts} handleTagClick={handleTagClick} />
+      <form className='relative w-full flex-center'>
+        <input
+          type='text'
+          placeholder='Search for a tag or a username'
+          value={searchText}
+          onChange={handleSearchChange}
+          required
+          className='search_input peer'
+        />
+      </form>
+
+      { searchText ? (
+        <PromptCardList data={searchResult} handleTagClick={handleTagClick} />
+      ):(
+        <PromptCardList data={allPosts} handleTagClick={handleTagClick} />
+      )}
     </section>
   )
 }
